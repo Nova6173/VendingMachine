@@ -26,4 +26,7 @@ public interface VendingMachine {
 
     // Method to check the stock of a product
     void checkStock (int productId);
+
+
+
 }

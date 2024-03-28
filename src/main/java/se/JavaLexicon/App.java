@@ -9,6 +9,9 @@ public class App {
         // Created a Vending Machine
         VendingMachine vendingMachine = new VendingMachineImpl();
 
+        // Initialize the vending machine and restock the inventory for all products
+        ((VendingMachineImpl) vendingMachine).restockAllProducts(10); // Restock all products with 10 units
+
         // Added money to the machine
         vendingMachine.addCurrency(20); // Add 20 Sek to the deposit pool
 
