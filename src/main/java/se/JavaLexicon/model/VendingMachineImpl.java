@@ -92,7 +92,7 @@ public class VendingMachineImpl implements VendingMachine {
     public void addCurrency(int amount) {
         if (isValidCurrency(amount)) {
             depositPool += amount;
-            System.out.println("Added " + amount + " to deposit pool.");
+            System.out.println("Added " + amount + "SEK to deposit pool.");
         } else {
             System.out.println("Invalid currency. Please insert valid currency.");
         }
