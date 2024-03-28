@@ -23,7 +23,7 @@ public class VendingMachineImpl implements VendingMachine {
         // Add initial products to the vending machine
         Product candy = new Candy(1, 10.0, "Chocolate Bar", true, CandyFlavor.CHOCOLATE);
         Product cookie = new Cookie(2, 8.0, "Oatmeal Cookie", CookieFlavor.OATMEAL_RAISIN);
-        Product soda = new Soda(3, 5.0, "Soda Drink Cola", SodaType.REGULAR);
+        Product soda = new Soda(3, 5.0, "Soda Drink Cola flavor", SodaType.REGULAR);
 
         addProduct(candy);
         addProduct(cookie);
