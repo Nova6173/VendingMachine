@@ -1,17 +1,18 @@
 package se.JavaLexicon;
 
-import java.util.Scanner;
+import java.util.Scanner; // Reads input from user
 import se.JavaLexicon.model.*;
 
 public class App {
     public static void main(String[] args) {
-        // Create a Vending Machine
+
+        // Created a Vending Machine
         VendingMachine vendingMachine = new VendingMachineImpl();
 
-        // Add money to the machine
-        vendingMachine.addCurrency(20);
+        // Added money to the machine
+        vendingMachine.addCurrency(20); // Add 20 Sek to the deposit pool
 
-        // Print out the available products with their numbers
+        // Prints out all the available products in the machine with their numbers
         String[] availableProducts = vendingMachine.getProducts();
         System.out.println("Available products:");
         for (String product : availableProducts) {
@@ -24,22 +25,23 @@ public class App {
         System.out.print("Enter the number of the product you want to buy: ");
         int productNumber = scanner.nextInt();
 
-        // Request the selected product
+        // Request the selected product (tries to buy yhe selected product)
         Product selectedProduct = vendingMachine.request(productNumber);
 
-        // Check if the selected product is not null (i.e., a valid product)
+        // Check if the selected product is not null (Checks if the product can be bought)
         if (selectedProduct != null) {
 
-            System.out.println(selectedProduct.getProductName() + " purchased.");
+            System.out.println(selectedProduct.getProductName() + " purchased."); // Print purchased product name
 
 
-            double change = vendingMachine.endSession();
+            double change = vendingMachine.endSession(); // Get the change after purchasing
 
 
-            System.out.println("Change returned: " + change + " SEK");
+            System.out.println("Change returned: " + change + " SEK"); // Print returned change
         } else {
 
-            System.out.println("Product could not be purchased.");
+            System.out.println("Product could not be purchased."); // Print if product could not be purchased
+
         }
     }
 
@@ -47,7 +49,7 @@ public class App {
     private static void printProductList(VendingMachine vendingMachine) {
         String[] products = vendingMachine.getProducts();
         for (int i = 0; i < products.length; i++) {
-            System.out.println((i + 1) + ". " + products[i]);
+            System.out.println((i + 1) + ". " + products[i]);  // Print product number and details
         }
     }
 }

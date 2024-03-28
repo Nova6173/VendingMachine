@@ -3,7 +3,7 @@ package se.JavaLexicon.model;
 public class Soda extends Product {
     private SodaType type;
 
-    // Constructor to initialize the soda with its ID, price, name, and type
+    // Constructor to initialize the soda with ID, price, name, and type
     public Soda(int id, double price, String productName, SodaType type) {
         super(id, price, productName);
         this.type = type;

@@ -2,7 +2,7 @@ package se.JavaLexicon.model;
 
 
 public abstract class Product {
-    private int id; // Unique identifier for the product
+    private int id; // Unique id for the product
     private double price; // Price of the product
     private String productName; // Name of the product
     private int stock; // Stock quantity of the product in the vending machine
@@ -50,13 +50,13 @@ public abstract class Product {
 
     // Method to examine the product
     public void examine() {
-        System.out.println (productName + " " + price + "SEK");
+        System.out.println (productName + " " + price + "SEK"); // Print product name and price
 
     }
 
     // Method to use the product
     public void use() {
-        System.out.println ("Thank you for your purchase! Enjoy & Welcome Back!");
+        System.out.println ("Thank you for your purchase! Enjoy & Welcome Back!"); // Print thank you message
 
     }
 

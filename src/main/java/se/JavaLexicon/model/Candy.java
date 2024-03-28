@@ -3,8 +3,8 @@ package se.JavaLexicon.model;
 
 public class Candy extends Product {
 
-    private boolean chocolate;
-    private CandyFlavor flavor;
+    private boolean chocolate; // Is the candy chocolate flavor or not
+    private CandyFlavor flavor; // Candy flavor
 
     // Constructor to initialize a Candy object with specified attributes
     public Candy(int id, double price, String productName, boolean chocolate, CandyFlavor flavor) {
@@ -15,7 +15,7 @@ public class Candy extends Product {
         this.flavor = flavor;
     }
 
-    // Getter and setter methods for the chocolate
+    // Getter and setters for the chocolate
     public void setChocolate(boolean chocolate) {
         this.chocolate = chocolate;
     }

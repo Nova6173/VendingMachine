@@ -4,8 +4,8 @@ package se.JavaLexicon.model;
 
 
     public enum SodaType {
-        REGULAR,
-        DIET
+        REGULAR, //Regular soda type
+        DIET // Diet soda type
     }
 
 
