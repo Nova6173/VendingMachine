@@ -23,12 +23,25 @@ public class VendingMachineImpl implements VendingMachine {
         // Add initial products to the vending machine
         Product candy = new Candy(1, 10.0, "Chocolate Bar", true, CandyFlavor.CHOCOLATE);
         Product cookie = new Cookie(2, 8.0, "Oatmeal Cookie", CookieFlavor.OATMEAL_RAISIN);
-        Product soda = new Soda(3, 5.0, "Soda Drink Cola flavor", SodaType.REGULAR);
+        Product CocaColaFlavor = new Soda(3, 5.0, "Soda Drink CocaCola flavor", SodaType.REGULAR);
+        Product CactusFlavor = new Soda(4, 5.0, "Soda Drink Cactus flavor", SodaType.DIET);
 
-        addProduct(candy); // Add candy product
-        addProduct(cookie); // Add cookie product
-        addProduct(soda); // Add soda product
 
+        addProduct(candy); // Add candy
+        addProduct(cookie); // Add cookie
+        addProduct(CocaColaFlavor); // Add soda
+        addProduct(CactusFlavor); // Add soda
+
+        // Add fruits to the vending machine
+        Product redDelicious = new Fruit(5, 3.0, "Apple", "Red Delicious");
+        Product ingridMarie = new Fruit(6, 3.0, "Apple", "Ingrid Marie");
+        Product banana = new Fruit(7, 2.5, "Banana", "Cavendish");
+        Product pear = new Fruit(8, 4.0, "Pear", "Bartlett");
+
+        addProduct(redDelicious); // add apple
+        addProduct(ingridMarie); // add apple
+        addProduct(banana); // add banana
+        addProduct(pear); // add pear
     }
 
     // Method to get a list of available products with details
@@ -37,12 +50,21 @@ public class VendingMachineImpl implements VendingMachine {
         List<String> productList = new ArrayList<>();
 
         for (Product product : products) {
-            // Creates a string with product information and adds it to the productList
-            String productInfo = "ID: " + product.getId() + ", Name: " + product.getProductName() + ", Price: " + product.getPrice() + " SEK";
-            productList.add(productInfo);
+            // Check if the product is an instance of Fruit
+            if (product instanceof Fruit) {
+                // Cast the product to Fruit and retrieve its variety
+                String fruitVariety = ((Fruit) product).getSort();
+                productList.add(product.getProductName() + " (" + fruitVariety + ")");
+            } else {
+                // For other types of products, simply add their names to the list
+                productList.add(product.getProductName());
+            }
         }
+
+        // Convert the list to an array and return
         return productList.toArray(new String[0]);
     }
+
 
     // Method to add a product to the vending machine
     @Override
@@ -138,12 +160,14 @@ public class VendingMachineImpl implements VendingMachine {
     // Method to check the stock of a product
     @Override
     public void checkStock(int productId) {
-        Product product = findProduct(productId);
+        Product product = findProduct (productId);
         if (product != null) {
-            int stock = product.getStock();
-            System.out.println("Stock for product " + product.getProductName() + ": " + stock); // Prints product stock
+            int stock = product.getStock ();
+            System.out.println ("Stock for product " + product.getProductName () + ": " + stock); // Prints product stock
         } else {
-            System.out.println("Product with ID " + productId + " does not exist."); //Pronts if product does not exist
+            System.out.println ("Product with ID " + productId + " does not exist."); //Pronts if product does not exist
         }
+
     }
-}
+
+    }
