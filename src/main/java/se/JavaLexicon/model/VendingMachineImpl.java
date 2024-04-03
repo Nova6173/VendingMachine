@@ -16,7 +16,8 @@ public class VendingMachineImpl implements VendingMachine {
         restockAllProducts(10);
     }
 
-    public void restockAllProducts (int i) {
+    public void restockAllProducts(int i) {
+        // Restock all products
     }
 
     // Method to initialize products in the vending machine
@@ -48,18 +49,14 @@ public class VendingMachineImpl implements VendingMachine {
         productStock[5] = ingridMarie;
         productStock[6] = banana;
         productStock[7] = pear;
-
-        for (int i = 0; i < products.length; i++) {
-            productStock[i] = products[i];
-        }
     }
 
     // Method to get a list of available products with details
     @Override
     public String[] getProducts() {
         int count = 0;
-        for (Product product : products){
-            if (product != null){
+        for (Product product : products) {
+            if (product != null) {
                 count++;
             }
         }
@@ -77,11 +74,10 @@ public class VendingMachineImpl implements VendingMachine {
         return productDetails;
     }
 
-
-
     // Method to add a product to the vending machine
     @Override
-    public void addProduct(Product product) { // Add product to the productStock
+    public void addProduct(Product product) {
+        // Add product to the productStock
         for (int i = 0; i < productStock.length; i++) {
             if (productStock[i] == null) {
                 productStock[i] = product;
@@ -91,8 +87,8 @@ public class VendingMachineImpl implements VendingMachine {
     }
 
     @Override
-    public void checkStock (int productId) {
-        
+    public void checkStock(int productId) {
+        // Check stock for a specific product
     }
 
     // Method to request and purchase a product from the vending machine
@@ -154,4 +150,4 @@ public class VendingMachineImpl implements VendingMachine {
         }
         return false; // If the provided amount does not match any of stated currency, return false
     }
-    }
+}
