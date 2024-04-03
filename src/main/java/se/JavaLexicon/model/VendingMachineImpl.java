@@ -1,106 +1,111 @@
 package se.JavaLexicon.model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public class VendingMachineImpl implements VendingMachine {
 
     private double depositPool; // The total amount of money deposited into the machine
-    private List<Product> products; // List to store products available in the machine
-    private Map<Integer, Product> productStock; // Keep track of product stock
+    private Product[] products; // List to store products available in the machine
+    private Product[] productStock; // Keep track of product stock
 
     // Constructor initializes productStock, products list, and adds initial products
     public VendingMachineImpl() {
-        this.productStock = new HashMap<>(); // Initialize productStock
-        this.products = new ArrayList<>(); // Initialize products list
+        this.productStock = new Product[10]; // Initialize productStock
+        this.products = new Product[10]; // Initialize products list
         initializeProducts(); // Add initial products to the machine
 
         // Restock the inventory with 10 units of each product
         restockAllProducts(10);
     }
 
+    public void restockAllProducts (int i) {
+    }
+
     // Method to initialize products in the vending machine
     private void initializeProducts() {
         // Add initial products to the vending machine
-        Product candy = new Candy(1, 10.0, "Chocolate Bar", true, CandyFlavor.CHOCOLATE);
-        Product cookie = new Cookie(2, 8.0, "Oatmeal Cookie", CookieFlavor.OATMEAL_RAISIN);
-        Product cocaColaFlavor = new Soda(3, 5.0, "Soda Drink CocaCola flavor", SodaType.REGULAR);
-        Product cactusFlavor = new Soda(4, 5.0, "Soda Drink Cactus flavor", SodaType.DIET);
-
-        addProduct(candy); // Add candy
-        addProduct(cookie); // Add cookie
-        addProduct(cocaColaFlavor); // Add soda
-        addProduct(cactusFlavor); // Add soda
-
-        // Add fruits to the vending machine
+        Product candy = new Candy(1, 10.0, "Candy Bar", true, CandyFlavor.CHOCOLATE);
+        Product cookie = new Cookie(2, 8.0, "Cookie", CookieFlavor.OATMEAL_RAISIN);
+        Product cocaColaFlavor = new Soda(3, 5.0, "Soda CocaCola", SodaType.REGULAR);
+        Product cactusFlavor = new Soda(4, 5.0, "Soda Cactus", SodaType.DIET);
         Product redDelicious = new Fruit(5, 3.0, "Apple", "Red Delicious");
         Product ingridMarie = new Fruit(6, 3.0, "Apple", "Ingrid Marie");
         Product banana = new Fruit(7, 2.5, "Banana", "Cavendish");
         Product pear = new Fruit(8, 4.0, "Pear", "Bartlett");
 
-        addProduct(redDelicious); // add apple
-        addProduct(ingridMarie); // add apple
-        addProduct(banana); // add banana
-        addProduct(pear); // add pear
+        products[0] = candy;
+        products[1] = cookie;
+        products[2] = cocaColaFlavor;
+        products[3] = cactusFlavor;
+        products[4] = redDelicious;
+        products[5] = ingridMarie;
+        products[6] = banana;
+        products[7] = pear;
+
+        productStock[0] = candy;
+        productStock[1] = cookie;
+        productStock[2] = cocaColaFlavor;
+        productStock[3] = cactusFlavor;
+        productStock[4] = redDelicious;
+        productStock[5] = ingridMarie;
+        productStock[6] = banana;
+        productStock[7] = pear;
+
+        for (int i = 0; i < products.length; i++) {
+            productStock[i] = products[i];
+        }
     }
 
     // Method to get a list of available products with details
     @Override
     public String[] getProducts() {
-        List<String> productList = new ArrayList<>();
-
-        for (int i = 0; i < products.size(); i++) {
-            Product product = products.get(i);
-            String productInfo = (i + 1) + ". " + product.getDescription();
-            productList.add(productInfo);
+        int count = 0;
+        for (Product product : products){
+            if (product != null){
+                count++;
+            }
         }
 
-        return productList.toArray(new String[0]);
+        String[] productDetails = new String[count];
+        int index = 0;
+        for (int i = 0; i < products.length; i++) {
+            Product product = products[i];
+            if (product != null) {
+                productDetails[index] = (i + 1) + "." + product.getProductName() + " - " + product.getPrice() + " SEK" + " - " + product.getDescription();
+                index++;
+            }
+        }
+
+        return productDetails;
     }
+
+
 
     // Method to add a product to the vending machine
     @Override
-    public void addProduct(Product product) {
-        products.add(product); // Add product to the products list
-        productStock.put(product.getId(), product); // Add product to the productStock
+    public void addProduct(Product product) { // Add product to the productStock
+        for (int i = 0; i < productStock.length; i++) {
+            if (productStock[i] == null) {
+                productStock[i] = product;
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void checkStock (int productId) {
+        
     }
 
     // Method to request and purchase a product from the vending machine
     @Override
     public Product request(int productId) {
         // Find the product with the specified productId
-        Product requestedProduct = findProduct(productId);
-
-        // Check if the requested product exists
-        if (requestedProduct == null) { // The product did not exist
-            System.out.println("Product with ID " + productId + " does not exist.");
-            return null;
+        for (Product product : productStock) {
+            if (product != null && product.getId() == productId) {
+                return product;
+            }
         }
 
-        // Check if the requested product is out of stock
-        if (requestedProduct.getStock() <= 0) { // The product is out of stock
-            System.out.println("Product " + requestedProduct.getProductName() + " is out of stock.");
-            return null;
-        }
-
-        // Check if the deposit pool has sufficient balance to purchase the product
-        if (depositPool >= requestedProduct.getPrice()) { // Checks if there is enough money
-            System.out.println("Dispensing product: " + requestedProduct.getProductName()); // Dispense the product
-            depositPool -= requestedProduct.getPrice(); // Update the balance
-            System.out.println("Remaining balance: " + depositPool); // Print remaining balance
-            requestedProduct.setStock(requestedProduct.getStock() - 1); // Reduce the product stock count
-            return requestedProduct; // Return the purchased product
-        } else {
-            System.out.println("Insufficient balance. Please add more currency."); // Print if balance is insufficient
-            return null;
-        }
-    }
-
-    // Method to find a product by ID
-    private Product findProduct(int productId) {
-        return productStock.get(productId); // Get the product from the productStock
+        return null; // return null if product not found
     }
 
     // Method to add currency to the deposit pool
@@ -125,7 +130,12 @@ public class VendingMachineImpl implements VendingMachine {
     // Method to get the description of a product
     @Override
     public String getDescription(int productId) {
-        return null;
+        for (Product product : productStock) {
+            if (product != null && product.getId() == productId) {
+                return product.getDescription();
+            }
+        }
+        return null; // return null if product not found
     }
 
     // Method to get the current balance in the deposit pool
@@ -142,37 +152,6 @@ public class VendingMachineImpl implements VendingMachine {
                 return true; // If the provided amount matches any of stated currency, return true
             }
         }
-        return false; // If the provided amount does not matche any of stated currency, return false
+        return false; // If the provided amount does not match any of stated currency, return false
     }
-
-    // Method to check the stock of a product
-    @Override
-    public void checkStock(int productId) {
-        Product product = findProduct(productId);
-        if (product != null) {
-            int stock = product.getStock();
-            System.out.println("Stock for product " + product.getProductName() + ": " + stock); // Prints product stock
-        } else {
-            System.out.println("Product with ID " + productId + " does not exist."); //Pronts if product does not exist
-        }
     }
-    // Method to restock the inventory for a specific product by its ID
-    public void restockProduct(int productId, int quantity) {
-        Product product = productStock.get(productId); //
-
-        if (product != null) {
-            // increase stock with
-            product.setStock(product.getStock() + quantity);
-            System.out.println("Restocked " + quantity + " units of " + product.getProductName());
-        } else {
-            System.out.println("Product with ID " + productId + " does not exist.");
-        }
-    }
-
-    // Method to restock the inventory for all products
-    public void restockAllProducts(int quantity) {
-        for (Product product : products) {
-            restockProduct(product.getId(), quantity);
-        }
-    }
-}
