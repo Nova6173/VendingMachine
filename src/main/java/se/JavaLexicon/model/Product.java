@@ -37,6 +37,7 @@ public abstract class Product {
 
     // Method to get the price of the product
     public double getPrice() {
+
         return price;
     }
 

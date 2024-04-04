@@ -10,7 +10,9 @@ public class VendingMachineImpl implements VendingMachine {
     private Product[] productStock;
     private List<String> productNames = new ArrayList<>();
     private List<String> productFlavors = new ArrayList<>();
-
+    
+    
+    
     public VendingMachineImpl() {
         this.productStock = new Product[10];
         this.products = new Product[10];
@@ -33,6 +35,8 @@ public class VendingMachineImpl implements VendingMachine {
         Product banana = new Fruit(7, 2.5, "Banana", "Cavendish");
         Product pear = new Fruit(8, 4.0, "Pear", "Bartlett");
 
+
+
         products[0] = candy;
         products[1] = cookie;
         products[2] = cocaColaFlavor;
@@ -41,6 +45,7 @@ public class VendingMachineImpl implements VendingMachine {
         products[5] = ingridMarie;
         products[6] = banana;
         products[7] = pear;
+
 
         productStock[0] = candy;
         productStock[1] = cookie;
@@ -51,6 +56,7 @@ public class VendingMachineImpl implements VendingMachine {
         productStock[6] = banana;
         productStock[7] = pear;
 
+
         productNames.add(candy.getProductName());
         productNames.add(cookie.getProductName());
         productNames.add(cocaColaFlavor.getProductName());
@@ -60,6 +66,7 @@ public class VendingMachineImpl implements VendingMachine {
         productNames.add(banana.getProductName());
         productNames.add(pear.getProductName());
 
+
         productFlavors.add(((Candy) candy).getFlavor().toString());
         productFlavors.add(((Cookie) cookie).getFlavor().toString());
         productFlavors.add(((Soda) cocaColaFlavor).getType().toString());
@@ -68,6 +75,7 @@ public class VendingMachineImpl implements VendingMachine {
         productFlavors.add(((Fruit) ingridMarie).getSort());
         productFlavors.add(((Fruit) banana).getSort());
         productFlavors.add(((Fruit) pear).getSort());
+
     }
 
     @Override
@@ -78,11 +86,16 @@ public class VendingMachineImpl implements VendingMachine {
             if (product != null) {
                 String productName = product.getProductName();
                 String productFlavor = getProductFlavor(productName);
+                double productPrice = product.getPrice();
+
+
                 productDetails[i] = (i + 1) + ". " + productName + " - " + product.getPrice() + " SEK" + " - " + productFlavor;
             }
         }
         return productDetails;
     }
+
+
 
     private String getProductFlavor(String productName) {
         for (int i = 0; i < productNames.size(); i++) {
@@ -105,7 +118,14 @@ public class VendingMachineImpl implements VendingMachine {
     @Override
     public void checkStock(int productId) {
         // Check stock for a specific product
+        Product product = productStock[productId - 1]; // Indexet är productId - 1 eftersom produktnummer börjar från 1
+        if (product != null) {
+            System.out.println("Stock for " + product.getProductName() + ": " + product.getStock());
+        } else {
+            System.out.println("Product not found.");
+        }
     }
+
 
     @Override
     public Product request(int productId) {
@@ -133,6 +153,7 @@ public class VendingMachineImpl implements VendingMachine {
         depositPool = 0;
         return returnedAmount;
     }
+
 
     @Override
     public String getDescription(int productId) {
